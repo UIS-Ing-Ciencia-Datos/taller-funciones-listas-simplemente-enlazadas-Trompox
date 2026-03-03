@@ -1,0 +1,93 @@
+class Nodo:
+    def __init__(self, dato):
+        self.dato = dato
+        self.siguiente = None
+
+class ListaEnlazada:
+    def __init__(self):
+        self.cabeza = None
+
+    #  Insertar al final
+    def insertar_final(self, dato):
+        nuevo_nodo = Nodo(dato)
+        if not self.cabeza:
+            self.cabeza = nuevo_nodo
+            return
+        actual = self.cabeza
+        while actual.siguiente:
+            actual = actual.siguiente
+        actual.siguiente = nuevo_nodo
+
+    # Insertar antes de un elemento X
+    def insertar_antes(self, x, dato):
+        if not self.cabeza:
+            return "Lista vacía"
+        
+        if self.cabeza.dato == x:
+            nuevo_nodo = Nodo(dato)
+            nuevo_nodo.siguiente = self.cabeza
+            self.cabeza = nuevo_nodo
+            return
+
+        actual = self.cabeza
+        while actual.siguiente and actual.siguiente.dato != x:
+            actual = actual.siguiente
+        
+        if actual.siguiente:
+            nuevo_nodo = Nodo(dato)
+            nuevo_nodo.siguiente = actual.siguiente
+            actual.siguiente = nuevo_nodo
+
+    # Insertar después de un elemento X
+    def insertar_despues(self, x, dato):
+        actual = self.cabeza
+        while actual and actual.dato != x:
+            actual = actual.siguiente
+        
+        if actual:
+            nuevo_nodo = Nodo(dato)
+            nuevo_nodo.siguiente = actual.siguiente
+            actual.siguiente = nuevo_nodo
+
+    #  Eliminar el primero
+    def eliminar_primero(self):
+        if self.cabeza:
+            self.cabeza = self.cabeza.siguiente
+
+    #  Eliminar el último
+    def eliminar_ultimo(self):
+        if not self.cabeza:
+            return
+        if not self.cabeza.siguiente:
+            self.cabeza = None
+            return
+        
+        actual = self.cabeza
+        while actual.siguiente.siguiente:
+            actual = actual.siguiente
+        actual.siguiente = None
+
+    #  Buscar un elemento por su valor (Verdadero o Falso)
+    def buscar(self, x):
+        actual = self.cabeza
+        while actual:
+            if actual.dato == x:
+                return True
+            actual = actual.siguiente
+        return False
+
+    #  Contar cuántos elementos tiene la lista
+    def contar(self):
+        contador = 0
+        actual = self.cabeza
+        while actual:
+            contador += 1
+            actual = actual.siguiente
+        return contador
+    #  Imprimir la lista                
+    def imprimir(self):
+        actual = self.cabeza
+        while actual:
+            print(actual.dato, end=' -> ')
+            actual = actual.siguiente
+        print('None')
